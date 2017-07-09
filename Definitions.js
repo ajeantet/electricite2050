@@ -1,3 +1,21 @@
+/*
+
+Electricite2050 1.0 <http://www.electricite-2050.fr/>
+Copyright (c) 2017 Adrien Jeantet
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation version 3 of the License.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
    var Consommation = {
     nom: ['Industries', 'Résidentiel', 'Tertiaire', 'Transports', 'Agriculture'],
     details: ['Électricité utilisée dans les industries, comme la sidérurgie par exemple.', 'Électricité à la maison (chauffage, eau chaude, machines, ordinateurs,...)', "Électricité utilisée dans les hôpitaux, les écoles, les bureaux, les commerces, etc... pour le chauffage, l'éclairage, l'informatique, etc...", 'Électricité pour les trains et les voitures électriques', 'Électricité utilisée dns les exploitations agricoles (outils, machines)'],
