@@ -1,0 +1,131 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="googlebot" content="noindex, nofollow" />
+
+  
+  
+
+  
+  
+  
+
+  
+
+  <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.js"></script>
+  <script language="JavaScript" type="text/javascript" src="/js/jquery-1.2.6.min.js"></script>
+<script language="JavaScript" type="text/javascript" src="/js/jquery-ui-personalized-1.5.2.packed.js"></script>
+<script language="JavaScript" type="text/javascript" src="/js/sprinkle.js"></script>
+ 
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+    <script type="text/javascript" src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+
+  
+  
+
+  
+
+  <style type="text/css" href="style.css"></style>
+
+  <title>Electricité-2050 par Adrien Jeantet</title>
+
+  
+    
+
+
+
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId            : 'mon ID',
+      autoLogAppEvents : true,
+      xfbml            : true,
+      version          : 'v2.9'
+    });
+    FB.AppEvents.logPageView();
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
+<script src="Definitions.js"></script>
+<script src="code_principal.js"></script>
+<link rel="stylesheet" type="text/css" href="style.css">
+
+</style>
+  
+</head>
+
+<body>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/highcharts-more.js"></script>
+<script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
+<script src="https://rawgithub.com/highcharts/draggable-points/master/draggable-points.js"></script> <!-- Voir aussi https://github.com/highcharts/draggable-points/issues/70 -->
+
+
+Aujourd'hui, l'électricité française est à 75% produite par des centrales nucléaires. Qu'en sera-t-il en 2050 ?
+Ce simulateur vous mets dans la peau du gouvernement : à vous de choisir comment l'électricité sera consommée, et comment elle sera produite. Un tableau final vous donnera les résultats de votre politique. A vous de jouer !
+
+<h2>La consommation</h2>
+De combien d'électricité avons-nous besoin ? Nous pouvons économiser en rénovant les bâtiments, mais aussi augmenter la <abbr title="On ne s'intéresse ici QUE à la consommation électrique, soit 25% environ de notre consommation d'énergie. Les 75% restant (carburants, chaleur) ne sont pas représentés." rel="tooltip">consommation électrique</abbr> en alimentant nos voitures à partir d'électricité plutôt que de pétrole. 
+Dans le graphique ci-dessous la consommation électrique de 2015 est donnée sur les colonnes de gauche. Ajustez la valeur de 2050 en tirant sur les colonnes de droite.
+<div id="Consommation_Chart" class="container1"></div>
+<div id="Consommation_Pie" class="container2"></div>
+L'unité utilisée ici est le <abbr title="1TWh=1TéraWatt-heure=1 milliard de KiloWatt-heure (kWh). Le kWh est l'unité du compteur EDF. La consommation typique d'un appartement de 70m2 chauffé à l'électrique est 10 000 kWh par an" rel="tooltip">TWh</abbr>
+<h2>La production</h2>
+Allez-vous renouveler le parc nucléaire ou passerez-vous aux énergies renouvelables ? Choisissez la production de chaque filière, mais gardez en tête que le total doit être supérieure à la consommation... et aux pertes ! En particulier, les énergies renouvelables intermittentes (solaire, éolien) induisent des besoins importants de stockage, qui entraînent des pertes supplémentaires.
+<div id="Production"> 	 	 
+
+<div id="Production_container"> 	 	 
+
+<div id="Production_Chart" style="height:400px"></div> 	 	 
+
+<div id="Production_jauge"></div> 	 	 
+
+</div> 	 	 
+
+<div id="Production_Pie"></div>
+	 	
+
+<div id="Stock_Chart"></div> 	 	 
+
+</div>
+<button id="button" class="button1">Détails</button>
+<div id="Bilan_Chart"></div>
+<h2>Vos résultats pour 2050 !</h2>
+Voilà à quoi ressemble le paysage électrique de la France que vous avez créé :
+<div id="containerResults"></div>
+<div id="Resultats_Chart" class="container"></div>
+
+<div class="wrapping_buttons">
+<div class="margin : 0 auto;">
+<button id="btnFB"><i class="fa fa-facebook-official" aria-hidden="true"></i> Partagez vos résultats sur Facebook</button><button id="btnTW"><i class="fa fa-twitter" aria-hidden="true"></i> Partagez vos résultats sur Twitter</button><button id="btnSave"><i class="fa fa-download" aria-hidden="true"></i> Téléchargez vos résultats en image</button><button id="btnLink"><i class="fa fa-link" aria-hidden="true"></i> Obtenir le lien de vos résultats</button>
+<input type="text" id="lien" />
+</div> 
+</div>
+
+  <div id="somediv">
+      &nbsp;
+    </div>
+
+Vous pouvez aussi télécharger un <span class="dropdown">scénario
+<span class="dropdown-content"><a href="http://www.electricite-2050.fr/?0%3D116.3%261%3D150.1%262%3D144.2%263%3D8.1%264%3D10.5%265%3D30%266%3D416.8%267%3D59.1%268%3D21.1%269%3D7.4%2610%3D8">Valeurs 2015</a>
+<a href="http://www.electricite-2050.fr/?0=116.3&1=150.1&2=144.2&3=8.1&4=10.5&5=0&6=274&7=53.3&8=100&9=82&10=36">50% nucléaire</a>
+<a href="http://www.electricite-2050.fr/?0%3D87.2%261%3D105.8%262%3D119.5%263%3D58.3%264%3D10.8%265%3D0%266%3D0%267%3D61%268%3D302%269%3D82%2610%3D34">Ademe 2050</a>
+<a href="http://www.electricite-2050.fr/?0%3D72.8%261%3D74.7%262%3D73.6%263%3D150%264%3D15.6%265%3D0%266%3D0%267%3D67.8%268%3D246.6%269%3D147.2%2610%3D18">NégaWatt 2050</a>
+</span></span> proposé pour la transition énergétique. Attention, cela effacera vos données.
+
+
+
+
+</body>
+
+</html>
+
