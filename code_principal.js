@@ -965,7 +965,7 @@ $(function() {
 /* Tuiles à afficher dans les résultats */
   function tile2(color, img, texte1, texte2, description, texte3, id) {
 
-    return '<div class="box" style="background: none repeat scroll 0 0 ' + color + '" title="' + description + '" id="' + id + '"><img alt="" src=' + img + '><br /><h1>' + texte1 + '</h1><p>' + texte2 + ' </p><p>' + texte3 + '</p></div>';
+    return '<div class="box" style="background: none repeat scroll 0 0 ' + color + '" title="' + description + '" id="' + id + '"><img alt="" src=http://www.electricite-2050.fr/' + img + '><br /><h1>' + texte1 + '</h1><p>' + texte2 + ' </p><p>' + texte3 + '</p></div>';
 
 
   }
