@@ -2,4 +2,3 @@
 Votre modèle pour la transition énergétique
 
 Code Javascript pour le site http://www.electricite-2050.fr/
-Le code sera nettoyé et commenté prochainement
