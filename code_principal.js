@@ -964,7 +964,7 @@ $(function() {
       // Mise en place des valeurs et couleurs
       series: [{
         name: 'Nouvelles formes de stockage',
-        data: BilanV.valeur2050[12],
+        data: [BilanV.valeur2050[12]],
         color: '#97d881',
         type: 'column',
         showInLegend: false,
@@ -1109,7 +1109,7 @@ $(function() {
       },
 
     }); //mise à jour du commentaire de la jauge
-    Stock_Chart.series[0].setData(BilanV.valeur2050[12]); //mise à jour du stockage
+    Stock_Chart.series[0].setData([BilanV.valeur2050[12]]); //mise à jour du stockage
 
     $('#containerResults').html(resultats()); //mise à jour des résultats
     document.getElementById("lien").value = "http://www.electricite-2050.fr/?" + ArrayToURL(Consommation.valeur2050.concat(Production.valeur2050)); //mise à jour du lien partageable
