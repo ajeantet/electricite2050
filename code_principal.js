@@ -16,7 +16,6 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
 $(function() {
 
 
@@ -92,9 +91,9 @@ $(function() {
             }
 	    // Pour les autres on indique la limite réaliste
             if (this.y < 1.03 * Consommation.Min[index] || this.y > 0.97 * Consommation.Max[index]) {
-              tempp2 += '<br /><span style="color:red">Vous avez atteint la limite réaliste !</span>';
+              tempp2 += '<br /><span style="color:red">Vous avez atteint la limite'+ Consommation.commentaire_limite[index] +'</span>';
             } else if (this.y < 1.25 * Consommation.Min[index] || this.y > 0.8 * Consommation.Max[index]) {
-              tempp2 += '<br /><span style="color:orange">Vous être proche de la limite réaliste !</span>';
+              tempp2 += '<br /><span style="color:orange">Vous être proche de la limite' + Consommation.commentaire_limite[index] + '</span>';
             }
             return tempp2;
           }
@@ -109,7 +108,7 @@ $(function() {
           useHTML: true,
           formatter: function() {
       	    // label sur l'axe x avec vignette. Le lien iframe est ajouté par une fonction spécifique (via l'id)
-            return '<div class="label_wrapper" id="' + this.value + '" title="' + Consommation.details[Consommation.nom.indexOf(this.value)] + '" ><img align="right;" class="icon" src="http://www.energie-2050.fr/' + Consommation.image[Consommation.nom.indexOf(this.value)] + '"   /><br />' + this.value + '</div>';
+            return '<div class="label_wrapper" id="' + this.value + '" title="' + Consommation.details[Consommation.nom.indexOf(this.value)] + '" ><img align="right;" class="icon" src="http://www.electricite-2050.fr/' + Consommation.image[Consommation.nom.indexOf(this.value)] + '"   />' + this.value + '</div>';
           }
 
         }
@@ -198,7 +197,7 @@ $(function() {
 
               drop: function(e) {
 		// comportement standard lors d'un changement de valeur => mise à jour des graphs
-                $('#drop').html(
+                
                   Consommation.valeur2050[this.index] = e.y,
                   Consommation_Pie.series[0].update({
                     data: PieTrace(Consommation)
@@ -207,7 +206,7 @@ $(function() {
                     text: 'Répartition de la consommation en 2050 (Total ' + parseInt(sum(Consommation.valeur2050)) + ' TWh/an)'
                   }),
                   Update(0),
-                )
+                $('#drop').html()
               }
 
             }
@@ -301,7 +300,8 @@ $(function() {
 
       chart: {
         renderTo: 'Production_Chart',
-        animation: false
+        animation: false,
+        backgroundColor: null,
       },
 
       title: {
@@ -310,6 +310,7 @@ $(function() {
 
       // Adapter l'étiquette de chaque colonne en fonction des actions de l'utilisateur 
       tooltip: {
+        useHTML: true,
         formatter: function() {
           var index = this.colorIndex;
           var Stack = this.series.options.stack;
@@ -325,10 +326,11 @@ $(function() {
               tempp += '<br /><span style="color:#216be7">' + parseInt(this.y / Production.unites[index]) + Production.unitext[index] + '</span>'; //+this.series.options.comment[index];
             }
             if (this.y > 0.97 * Production.Max[index]) {
-              tempp += '<br /><span style="color:red">Vous avez atteint la limite réaliste !</span>';
+              tempp += '<br /><span style="color:red">Vous avez atteint la limite'+ Production.commentaire_limite[index] +'</span>';
             } else if (this.y > 0.8 * Production.Max[index]) {
-              tempp += '<br /><span style="color:orange">Vous être proche de la limite réaliste !</span>';
+              tempp += '<br /><span style="color:orange">Vous être proche de la limite'+ Production.commentaire_limite[index] +'</span>';
             }
+            
             return tempp;
           }
         }
@@ -338,10 +340,10 @@ $(function() {
       xAxis: {
         categories: Production.nom,
         labels: {
+        useHTML: true,
           enabled: true,
-          useHTML: true,
           formatter: function() {
-            return '<div class="label_wrapper" align="center;" style="text-align:center;" title="' + Production.details[Production.nom.indexOf(this.value)] + '" id="' + this.value + '"><img align="right;" class="icon" src="http://www.energie-2050.fr/' + Production.image[Production.nom.indexOf(this.value)] + '"  /><br />' + this.value + '</div>';
+            return '<div class="label_wrapper" align="center;" style="text-align:center;" title="' + Production.details[Production.nom.indexOf(this.value)] + '" id="' + this.value + '"><img align="right;" class="icon" src="http://www.electricite-2050.fr/' + Production.image[Production.nom.indexOf(this.value)] + '"  />' + this.value + '</div>';
           }
 
         }
@@ -428,14 +430,14 @@ $(function() {
 
               drop: function(e2) {
 		// Comportement normal en cas de changement de la valeur
-                $('#drop').html(
+                
 
                   Production.valeur2050[this.index] = e2.y,
                   Production_Pie.series[0].update({
                     data: PieTrace(Production)
                   }),
                   Update(0),
-                )
+                $('#drop').html()
               }
 
             }
@@ -849,10 +851,10 @@ $(function() {
         max: parseInt(BilanV.valeur2050[10]),
         // valeurs de départ
         title: {
-          text: 'Production suffisante !',
+          text: 'Production insuffisante !',
           y: -30,
           style: {
-            color: 'green',
+            color: 'red',
             "fontWeight": "bold",
             "fontSize": "13px",
           }
@@ -879,7 +881,8 @@ $(function() {
         name: 'Production',
         data: [parseInt(BilanV.valeur2050[0])],
         dataLabels: {
-          format: '<div style="text-align:left;">' +
+          useHTML: true,
+          format: '<div class="jauge_text">' +
             '<span class="jauge_text_2">Production : {y} TWh <br />Conso + Pertes :  ' + parseInt(BilanV.valeur2050[10]) + ' TWh</span><span class="jauge_text_1"><br />' + expimp() + ' :  ' + Math.abs(parseInt(BilanV.valeur2050[3])) + ' TWh</span></div>'
         },
         tooltip: {
@@ -922,9 +925,8 @@ $(function() {
         categories: Production.nom,
         labels: {
           enabled: true,
-          useHTML: true,
           formatter: function() {
-            return '<div class="label_wrapper" align="center;" style="text-align:center;" title="' + stockage.details + '" id="stocklab"><img align="right;" class="icon" src="http://www.energie-2050.fr/' + stockage.image + '"  /><br />' + stockage.nom + '</div>';
+            return '<div class="label_wrapper" align="center;" style="text-align:center;" title="' + stockage.details + '" id="stocklab"><img align="right;" class="icon" src="http://www.electricite-2050.fr/' + stockage.image + '"  /><br />' + stockage.nom + '</div>';
           }
 
         }
@@ -1031,7 +1033,7 @@ $(function() {
       t1 = "#f35d28",
         t2 = "wp-content/uploads/2017/06/unsmile.svg",
         t3 = "Au travail !"
-      t4 = "Votre modèle n'est pas réaliste !"
+      t4 = "Le mix électrique n'est pas équilibré !"
     } else if (Reali > 5) {
       t1 = "#f39f28",
         t2 = "wp-content/uploads/2017/06/hardsmile.svg",
@@ -1056,7 +1058,7 @@ $(function() {
 
 /* calcul des résultats, génération des tuiles */
   function resultats() {
-    return "<div class='containerResults'>" + realisme() +
+    return "<div class='containerResults2'>" + realisme() +"</div><div class='containerResults'>" + realisme() +
       tile2("#cecece", updown(BilanV.valeur2050[2], BilanV.valeur2015[2]), parseInt(BilanV.valeur2050[2]) + " TWh/an", "Consommation", "Consommation d'électricité nette annuelle", comp(parseInt(BilanV.valeur2050[2]), parseInt(BilanV.valeur2015[2])), 'conso') +
       tile2(Highcharts.getOptions().colors[0], "wp-content/uploads/2017/06/renouvelable_w-4.svg", parseInt(100 * sum(Production.valeur2050.slice(2, 6)) / sum(Production.valeur2050.slice(0, 6))) + " %", "renouvelable", "Proportions de renouvelables dans la production d'électricité", "(16% aujourd'hui)", 'enr') +
       tile2(Production.colors[1], "wp-content/uploads/2017/06/Nuclear_w-1.svg", parseInt(Production.valeur2050[1] / Production.unites[1]), "centrales", "Centrales nucléaires type EPR (plusieurs réacteurs par centrale)", "(19 aujourd'hui)", 'nucleaire') +
@@ -1065,11 +1067,10 @@ $(function() {
       tile2('#abe2f6', "wp-content/uploads/2017/06/CO2_w-1.svg", BilanV.CO2 + " MtCO2/an", "MégaTonnes de C02/an", "Rejets annuels de CO2 liés à la production de CO2 (en annalyse de cycle de vie)", comp(BilanV.CO2, 45), 'co2') +
       tile2(Highcharts.getOptions().colors[3], "wp-content/uploads/2017/06/emploi_w.svg", BilanV.Emplois, "Emplois/an", "Rejets annuels de CO2 liés à la production de CO2 (en annalyse de cycle de vie)", comp(BilanV.Emplois, 130000), 'emploi') +
       tile2("#8ed33d", "wp-content/uploads/2017/06/cout_w.svg", BilanV.coût, "Euros/kWh", "Coût de production de l'électricité (en analyse de cycle de vie)", comp(BilanV.coût, 0.06), 'cout') +
-      tile2("#d6ab85", "wp-content/uploads/2017/06/investissement.svg", BilanV.Investissement + " Md€/an", "Milliards d'euros par an", "Investissements nécessaires pour votre programme sur 30 ans", "d'investissement", 'investissement') +
+      tile2("#d6ab85", "wp-content/uploads/2017/06/investissement.svg", BilanV.Investissement + " Md€/an", "d'investissements", "Investissements nécessaires pour votre programme sur 30 ans", comp(BilanV.Investissement, 10), 'investissement') +
       tile2("#f2b1b1", updown2(parseInt(BilanV.valeur2050[3])), Math.abs(parseInt(BilanV.valeur2050[3])) + " TWh/an", expimp(), "Exportations/Importations nettes (échanges avec les pays voisins)", "(" + parseInt(100 * Math.abs(BilanV.valeur2050[3]) / BilanV.valeur2050[0]) + " % de la production)", 'export') +
-      tile2("#a4eede", "wp-content/uploads/2017/06/elec-1.svg", parseInt(23 + 100 * Consommation.valeur2050[3] / 1800) + "%", "Part de l'électricité dans", "Pour réaliser la transition énergétique, il faut aussi s'aoccuper des transports et du chauffage !", "le mix énergétique", 'elec') +
+      tile2("#a4eede", "wp-content/uploads/2017/07/elec-1.svg", parseInt(23 + 100 * Consommation.valeur2050[3] / 1800) + "%", "Part de l'électricité dans", "Pour réaliser la transition énergétique, il faut aussi s'aoccuper des transports et du chauffage !", "le mix énergétique", 'elec') +
       '</div>'
-
 
   }
 
@@ -1104,7 +1105,7 @@ $(function() {
     Production_jauge.series[0].points[0].update(parseInt(BilanV.valeur2050[0])); //mise à jour de sa valeur
     Production_jauge.series[0].update({
       dataLabels: {
-        format: '<div style="text-align:left;">' +
+        format: '<div class="jauge_text">' +
           '<span class="jauge_text_2">Production : {y} TWh <br />Conso + Pertes :  ' + parseInt(BilanV.valeur2050[10]) + ' TWh</span><span class="jauge_text_1"><br />' + expimp() + ' :  ' + Math.abs(parseInt(BilanV.valeur2050[3])) + ' TWh</span></div>'
       },
 
@@ -1112,6 +1113,14 @@ $(function() {
     Stock_Chart.series[0].setData([BilanV.valeur2050[12]]); //mise à jour du stockage
 
     $('#containerResults').html(resultats()); //mise à jour des résultats
+    if (Reali>10) {
+        $('.containerResults').hide();
+        $('.containerResults2').show();
+    } else {
+    $('.containerResults').show();
+    $('.containerResults2').hide();
+    }
+    
     document.getElementById("lien").value = "http://www.electricite-2050.fr/?" + ArrayToURL(Consommation.valeur2050.concat(Production.valeur2050)); //mise à jour du lien partageable
     return "ok";
 
@@ -1187,6 +1196,7 @@ $(function() {
         allowPointSelect: true,
         cursor: 'pointer',
         dataLabels: {
+        useHTML: true,
           distance: -30,
           format: '{point.percentage:.1f} %',
         },
@@ -1256,9 +1266,7 @@ $(function() {
 
 
 
-    },
-
-  );
+    });
 
 // Cacher le Bilan
   $('#Bilan_Chart').find('.highcharts-container').hide();
@@ -1300,7 +1308,8 @@ $(function() {
 
 // Tracer les résultats
   $('#containerResults').html(resultats());
-
+  $('.containerResults').hide();
+  $('.containerResults2').show();
 
 // Convertir un tableau en string query dans l'url
   function ArrayToURL(array) {
@@ -1399,52 +1408,72 @@ $(function() {
     $dialog.dialog('open');
 
   }
-  $('#Industries').click(function() {
+  $(document).on('click','#Industries',function() {
     opendialog("http://www.electricite-2050.fr/a-propos/consommation/#IndustriesA");
   });
-  $('#Résidentiel').click(function() {
+  $(document).on('click','#Résidentiel',function() {
     opendialog("http://www.electricite-2050.fr/a-propos/consommation/#RésidentielA");
   });
-  $('#Tertiaire').click(function() {
+  $(document).on('click','#Tertiaire',function() {
     opendialog("http://www.electricite-2050.fr/a-propos/consommation/#TertiaireA");
   });
-  $('#Transports').click(function() {
+  $(document).on('click','#Transports',function() {
     opendialog("http://www.electricite-2050.fr/a-propos/consommation/#TransportsA");
   });
-  $('#Agriculture').click(function() {
+  $(document).on('click','#Agriculture',function() {
     opendialog("http://www.electricite-2050.fr/a-propos/consommation/#AgricultureA");
   });
-  $('#Fossiles').click(function() {
+  $(document).on('click','#Fossiles',function() {
     opendialog("http://www.electricite-2050.fr/a-propos/production/#FossilesA");
   });
-  $('#Nucléaire').click(function() {
+  $(document).on('click','#Nucléaire',function() {
     opendialog("http://www.electricite-2050.fr/a-propos/production/#NucleaireA");
   });
-  $('#Hydraulique').click(function() {
-    opendialog("http://www.electricite-2050.fr/a-propos/production/#HydrauliqueA");
+  $(document).on('click','#Hydraulique',function() {
+    opendialog("http://www.electricite-2050.fr/a-propos/production/#HydrauA");
   });
-  $('#Éolien').click(function() {
+  $(document).on('click','#Éolien',function() {
     opendialog("http://www.electricite-2050.fr/a-propos/production/#EolienA");
   });
-  $('#Solaire').click(function() {
+  $(document).on('click','#Solaire',function() {
     opendialog("http://www.electricite-2050.fr/a-propos/production/#SolaireA");
   });
-  $('#Bioénergies').click(function() {
+  $(document).on('click','#Bioénergies',function() {
     opendialog("http://www.electricite-2050.fr/a-propos/production/#BioA");
   });
-  $('#stocklab').click(function() {
+  $(document).on('click','#stocklab',function() {
     opendialog("/a-propos/stockage-et-pertes/");
   });
   X = ['reali', 'conso', 'enr', 'nucleaire', 'solaire', 'eolien', 'co2', 'cout', 'investissement', 'emploi', 'export', 'elec'];
   for (var i = 0; i < X.length; i++) {
-    $('#' + X[i]).click(function() {
+    $(document).on('click','#' + X[i],function() {
       opendialog("http://www.electricite-2050.fr/a-propos/resultats/#" + this.id);
     });
 
   }
 
 
-
+/* Changer de scénario */
+$('#Val2015').click(function() {
+ Consommation.valeur2050=Scenarios.v2015_conso.slice(0,5);
+ Production.valeur2050=Scenarios.v2015_prod.slice(0,6);
+ Update(1)
+});
+$('#Nuc50').click(function() {
+ Consommation.valeur2050=Scenarios.Nucleaire50_conso.slice(0,5);
+ Production.valeur2050=Scenarios.Nucleaire50_prod.slice(0,6);
+ Update(1)
+});
+$('#Ademe2050').click(function() {
+ Consommation.valeur2050=Scenarios.Ademe2050_conso.slice(0,5);
+ Production.valeur2050=Scenarios.Ademe2050_prod.slice(0,6);
+ Update(1)
+});
+$('#NegaWatt').click(function() {
+ Consommation.valeur2050=Scenarios.NegaWatt2050_conso.slice(0,5);
+ Production.valeur2050=Scenarios.NegaWatt2050_prod.slice(0,6);
+ Update(1)
+});
 
 /* Mise à jur des valeurs s'il y a des paramettres dans l'URL */
   AA = URLToArray(decodeURIComponent(window.location.search));
@@ -1452,6 +1481,8 @@ $(function() {
     Consommation.valeur2050 = AA.slice(0, 5);
     Production.valeur2050 = AA.slice(5, 11);
     Update(1);
+    var clean_uri = location.protocol + "//" + location.host + location.pathname;
+    window.history.replaceState({}, document.title, clean_uri);
   }
  
 /* tooltip  pour ajouter des infos dans le texte */

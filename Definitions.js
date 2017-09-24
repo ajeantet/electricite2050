@@ -15,7 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-
+  
    var Consommation = {
     nom: ['Industries', 'Résidentiel', 'Tertiaire', 'Transports', 'Agriculture'],
     details: ['Électricité utilisée dans les industries, comme la sidérurgie par exemple.', 'Électricité à la maison (chauffage, eau chaude, machines, ordinateurs,...)', "Électricité utilisée dans les hôpitaux, les écoles, les bureaux, les commerces, etc... pour le chauffage, l'éclairage, l'informatique, etc...", 'Électricité pour les trains et les voitures électriques', 'Électricité utilisée dns les exploitations agricoles (outils, machines)'],
@@ -23,9 +23,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     image: ['wp-content/uploads/2017/05/industries-1.svg', 'wp-content/uploads/2017/05/Residentiel.svg', 'wp-content/uploads/2017/05/Tertiaire.svg', 'wp-content/uploads/2017/05/transports-1.svg', 'wp-content/uploads/2017/05/Agriculture.svg'],
     valeur2015: [116.3, 150.1, 144.2, 8.1, 10.5], // http://www.statistiques.developpement-durable.gouv.fr/publications/p/2669/966/chiffres-cles-lenergie-edition-2016.html
     valeur2050: [116.3, 150.1, 144.2, 8.1, 10.5],
-    unites: [1.16, 0.1, 16, 4, 0], //nbre de kWh par centrale/m2 de panneau solaire par personne/éolienne...
-    unitext: ["% de baisse (Économies d'énergie, sobriété)", ' 000 logements rénovés par an', ' % des commerces et bureaux sont rennovés par an', ' % des voitures deviennent électriques', ""], //nbre de kWh par centrale/m2 de panneau solaire/éolienne...
-    Max: [150, 200, 200, 160, 20],
+    unites: [1.16, 0.1, 16, 2, 0], //nbre de kWh par centrale/m2 de panneau solaire par personne/éolienne...
+    unitext: ["% de baisse (Économies d'énergie, sobriété)", ' 000 logements rénovés par an', ' % des commerces et bureaux sont rennovés par an', ' % des véhicules deviennent électriques', ""], //nbre de kWh par centrale/m2 de panneau solaire/éolienne...
+    commentaire_limite: [" de l'amélioration de l'efficacité des industries et de la baisse de consommation.",". Il sera difficile de rénover les logements plus vite !", ". Il sera difficle de rénover ces bâtiments plus vite !", ". Tous les transports ne vont pas s'électrifier."," de l'amélioration de l'efficacité des engins et bâtiments agricoles."],
+    Max: [150, 200, 200, 180, 20],
     Min: [70, 70, 70, 5, 8],
   };
 
@@ -35,11 +36,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     image: ['wp-content/uploads/2017/05/Fossiles.svg', 'wp-content/uploads/2017/06/Nuclear-1.svg', 'wp-content/uploads/2017/05/Hydrau.svg', 'wp-content/uploads/2017/05/eolien.svg', 'wp-content/uploads/2017/05/solaire.svg', 'wp-content/uploads/2017/05/biomasse.svg', 'wp-content/uploads/2017/06/storage.svg'],
     colors: ["#434348", "#bf9df1", "#7cb5ec", "#f98af8", "#f8d334", "#90ed7d"],
     valeur2015: [34.4, 416.8, 53.3, 21.1, 7.4, 8.0], // Production nette https://opendata.rte-france.com/explore/dataset/prod_par_filiere/table/?sort=-annee 
-    valeur2050: [34.4, 416.8, 53.3, 21.1, 7.4, 8.0],
+    //valeur2050: [34.4, 416.8, 53.3, 21.1, 7.4, 8.0],
+    valeur2050: [30, 30, 30, 30, 30, 30],
     unites: [5, 21, 0, 0.01, 0.06 * 70000000 / 1000000, 0], //nbre de kWh par centrale/m2 de panneau solaire par personne/éolienne...
     unitext: [' centrales au gaz', ' centrales de nouvelle génération', 0, ' Éoliennes (dont 15% en mer)', " m² de panneaux solaires par personne", 0], //nbre de kWh par centrale/m2 de panneau solaire/éolienne...
     Max: [200, 600, 70, 310, 150, 50],
     Min: [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    commentaire_limite: [". Pourquoi développer cette source très polluante ?", ". Avez-vous besoin de produire autant ?", ". La plupart des ressources hydro sont déjà exploitées.", " de la vitesse à laquelle peut se développer le parc éolien.", " de la vitesse à laquelle peut se développer le parc solaire.", ". Les bioénergies se développeront plus pour les carburants et la chaleur que l'électricité."],
     CO2: [450, 66, 13, 34, 50, 35, 0], // g/kWh    https://doi.org/10.1016/j.enpol.2013.10.048
     StorageFactor: [0, 0.13, 0.22, 0.73, 1.41, 0.08],
     StorageFactor2: [0, 0.05, 0.10, 0.29, 0.59, 0.03],
@@ -55,7 +58,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     Ademe2050_prod: [0, 0, 61, 302, 82, 34],
     NegaWatt2050_conso: [72.8, 74.7, 73.6, 150, 15.6],
     NegaWatt2050_prod: [0, 0, 67.8, 246.6, 147.2, 18],
-
+    Nucleaire50_conso: [116.3, 150.1, 144.2, 8.1, 10.5],
+    Nucleaire50_prod: [0, 271, 53.3, 100, 82, 36],
   }
 
   var stockage = {
@@ -71,4 +75,5 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   }
 
   var Pertes_reseau = 0.08; //
+
 
